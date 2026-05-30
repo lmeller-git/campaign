@@ -22,4 +22,6 @@ RUN --mount=type=secret,id=HF_TOKEN \
     export HF_TOKEN=$(cat /run/secrets/HF_TOKEN) && \
     uv sync --frozen --no-dev
 
+COPY . .
+
 ENTRYPOINT ["run_pipeline.sh"]

@@ -9,8 +9,10 @@ dependencies = [
     "cuequivariance-ops-torch-cu12>=0.10.0",
     "cuequivariance-torch>=0.10.0",
     "lightning>=2.6.5",
+    "matplotlib>=3.10.9",
     "numpy>=1.26.4",
     "pandas>=2.3.3",
     "pyyaml>=6.0.2",
+    "seaborn>=0.13.2",
     "torch>=2.12.0",
 ]

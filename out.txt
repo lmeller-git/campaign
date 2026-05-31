@@ -1,0 +1,89 @@
+-------------------------------------
+STEP 1: Running cofolding predictions against target...
+Found 50 scFv candidates.
+
+--- Running prediction for design_15_edits_7 ---
+Generated Boltz2 config at /app/predictions/design_15_edits_7/input.yaml
+Running command: boltz predict /app/predictions/design_15_edits_7/input.yaml --out_dir /app/predictions/design_15_edits_7 --diffusion_samples 3 --accelerator gpu --devices 0 --override
+--- Boltz2 Error ---
+STDOUT: Downloading the CCD data to /root/.boltz/mols.tar. This may take a bit of time. You may change the cache directory with the --cache flag.
+Extracting the CCD data to /root/.boltz/mols. This may take a bit of time. You may change the cache directory with the --cache flag.
+Downloading the Boltz-2 weights to /root/.boltz/boltz2_conf.ckpt. You may change the cache directory with the --cache flag.
+Downloading the Boltz-2 affinity weights to /root/.boltz/boltz2_aff.ckpt. You may change the cache directory with the --cache flag.
+Checking input data.
+Processing 1 inputs with 1 threads.
+Found explicit empty MSA for some proteins, will run these in single sequence mode. Keep in mind that the model predictions will be suboptimal without an MSA.
+Found explicit empty MSA for some proteins, will run these in single sequence mode. Keep in mind that the model predictions will be suboptimal without an MSA.
+
+STDERR:
+  0%|          | 0/1 [00:00<?, ?it/s]
+100%|██████████| 1/1 [00:00<00:00,  6.41it/s]
+100%|██████████| 1/1 [00:00<00:00,  6.41it/s]
+Traceback (most recent call last):
+  File "/app/.venv/bin/boltz", line 10, in <module>
+    sys.exit(cli())
+             ^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/click/core.py", line 1157, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/click/core.py", line 1078, in main
+    rv = self.invoke(ctx)
+         ^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/click/core.py", line 1688, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/click/core.py", line 1434, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/click/core.py", line 783, in invoke
+    return __callback(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/boltz/main.py", line 1256, in predict
+    trainer = Trainer(
+              ^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/pytorch_lightning/utilities/argparse.py", line 70, in insert_env_defaults
+    return fn(self, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/pytorch_lightning/trainer/trainer.py", line 396, in __init__
+    self._accelerator_connector = _AcceleratorConnector(
+                                  ^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/pytorch_lightning/trainer/connectors/accelerator_connector.py", line 146, in __init__
+    self._check_device_config_and_set_final_flags(devices=devices, num_nodes=num_nodes)
+  File "/app/.venv/lib/python3.12/site-packages/pytorch_lightning/trainer/connectors/accelerator_connector.py", line 327, in _check_device_config_and_set_final_flags
+    raise MisconfigurationException(
+lightning_fabric.utilities.exceptions.MisconfigurationException: `Trainer(devices=0)` value is not a valid input using cuda accelerator.
+
+--------------------
+Traceback (most recent call last):
+  File "/app/run_cofold.py", line 79, in <module>
+    run_boltz2_cofold(
+  File "/app/run_cofold.py", line 59, in run_boltz2_cofold
+    subprocess.run(command, check=True, text=True, capture_output=True)
+  File "/usr/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['boltz', 'predict', '/app/predictions/design_15_edits_7/input.yaml', '--out_dir', '/app/predictions/design_15_edits_7', '--diffusion_samples', '3', '--accelerator', 'gpu', '--devices', '0', '--override']' returned non-zero exit status 1.
+Traceback (most recent call last):
+  File "/app/01_run_predictions.py", line 42, in <module>
+    main()
+  File "/app/01_run_predictions.py", line 38, in main
+    subprocess.run(command, check=True)
+  File "/usr/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['python3', '/app/run_cofold.py', '--target_fasta_path', '/app/sequences/targets/egfr.fasta', '--binder_fasta_path', '/app/sequences/binders/design_15_edits_7.fasta', '--output_dir', '/app/predictions/design_15_edits_7', '--samples', '3']' returned non-zero exit status 1.
+STEP 1: Done.
+-------------------------------------
+STEP 2: Running negative controls against decoys...
+FASTA files not found in /app/sequences/binders or /app/decoys
+STEP 2: Done.
+-------------------------------------
+STEP 3: Extracting metrics from all runs...
+No metrics found. Please check your file paths and JSON structure.
+STEP 3: Done.
+-------------------------------------
+STEP 4: Ranking candidates...
+Error: Metrics file not found at /app/metrics/all_metrics.csv
+Please run 03_extract_metrics.py first.
+STEP 4: Done.
+-------------------------------------
+🎉 Pipeline finished successfully!
+Your final ranked candidates are in: campaign/ranked/ranked_candidates.csv

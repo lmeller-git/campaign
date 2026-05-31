@@ -24,4 +24,4 @@ RUN --mount=type=secret,id=HF_TOKEN \
 
 COPY . .
 
-ENTRYPOINT ["run_pipeline.sh"]
+ENTRYPOINT ["bash", "run_pipeline.sh"]

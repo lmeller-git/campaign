@@ -5,6 +5,7 @@ HF_TOKEN_VAL := env_var_or_default("HF_TOKEN", "")
 HF_HOME := env_var_or_default("HF_HOME", "")
 HF_HUB_CACHE := env_var_or_default("HF_HUB_CACHE", "")
 DOCKER_PASSWORD_VAL := env_var_or_default("DOCKER_PASSWORD", "")
+LYCEUM_API_KEY := env_var_or_default("LYCEUM_API_KEY", "")
 
 default:
     @just --list
@@ -55,6 +56,7 @@ run-cloud-image machine="gpu.h100":
       -e HF_TOKEN="{{HF_TOKEN_VAL}}" \
       -e HF_HOME="{{HF_HOME}}" \
       -e HF_HUB_CACHE="{{HF_HUB_CACHE}}" \
+      -e LYCEUM_API_KEY="{{LYCEUM_API_KEY}}" \
       --registry-type basic \
       --registry-creds '{"username":"{{DOCKER_USER}}","password":"{{DOCKER_PASSWORD_VAL}}"}'
 
